@@ -1,0 +1,8 @@
+html {background-image: url(back-3.png);}
+canvas
+{background-color:#ffffff;
+box-shadow:40px 40px 0px rgba(0, 0, 0,0.25);}
+body
+{padding: calc((100vh - 480px)/2) 0 0 calc((100vw - 512px)/2);
+margin: 0px 0 0 0;
+} 
