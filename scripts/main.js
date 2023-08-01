@@ -10,15 +10,18 @@ const haikei = document.getElementById("haikei1");
 
 //console.log(chara1);
 let x = 0;
-let y = 10;
+let y = 100;
 let vx = 0;
-let xx = 0;
 let vy = 0;
 let s = 1024;
 let n = 1;
 let Character = 1;
 let chara;
 let secchi = "uiteru";
+
+let right = false;
+let left = false;
+
 const ctx = jiro.getContext("2d");
 
 ctx.fillStyle = "#ff77cc";
@@ -52,27 +55,116 @@ function yuyuyuyuyu() {
     }
   }
 
-  //if()
+  // 加速度
   y = y + vy;
   x = x + vx;
-  x = x + xx;
 
-  const j = Math.floor(x / 32);
-  const i = 15 - Math.ceil(y / 32);
+  /*
+   * 衝突判定
+   */
+  // 横方向の衝突判定
+  function collideX(modifier, modifier2) {
+    const xIndex = x / 32;
+    const yIndex = 15 - y / 32;
+    const targetXIndex = Math.round(xIndex);
+    const targetYIndex = Math.round(yIndex) + (modifier2 || 0);
+
+    if (
+      (targetYIndex - 2 >= 0 &&
+        targetYIndex - 2 < stage.length &&
+        stage[targetYIndex - 2][targetXIndex + modifier] === 1) ||
+      (targetYIndex - 1 >= 0 &&
+        targetYIndex - 1 < stage.length &&
+        stage[targetYIndex - 1][targetXIndex + modifier] === 1)
+    ) {
+      vx = 0;
+      x = targetXIndex * 32;
+      return true;
+    }
+
+    return false;
+  }
+
+  // 縦方向の衝突判定
+  function collideY(modifier1, modifier2, modifier3) {
+    const xIndex = x / 32;
+    const yIndex = 15 - y / 32;
+    const targetXIndex = Math.round(xIndex);
+    const targetYIndex = Math.round(yIndex);
+
+    if (
+      targetYIndex + modifier1 >= 0 &&
+      targetYIndex + modifier1 < stage.length &&
+      stage[targetYIndex + modifier1][targetXIndex + modifier3] === 1
+    ) {
+      vy = 0;
+      y = (15 - targetYIndex + modifier2) * 32;
+    }
+  }
+
+  // 計算の振り分け
+  const xIndex = x / 32;
+  const yIndex = 15 - y / 32;
+  const fractionX = xIndex - Math.floor(xIndex);
+  const fractionY = yIndex - Math.floor(yIndex);
+
+  let collide = false;
+
+  if (vx > 0 && fractionX < 0.5) {
+    // 右に進んでいる
+    collide = collideX(1) || collide;
+    if (fractionY > 0.2 && fractionY < 0.8) {
+      if (fractionY > 0.5) collide = collideX(1, -1) || collide;
+      else collide = collideX(1, 1) || collide;
+    }
+  }
+
+  if (vx < 0 && fractionX > 0.5) {
+    // 左に進んでいる
+    collide = collideX(-1) || collide;
+    if (fractionY > 0.2 && fractionY < 0.8) {
+      if (fractionY > 0.5) collide = collideX(-1, -1) || collide;
+      else collide = collideX(-1, 1) || collide;
+    }
+  }
+
+  if (vy > 0 && fractionY > 0.5) {
+    // 上に飛んでいる
+    collideY(-3, 0, 0);
+    if (fractionX > 0.2 && fractionX < 0.8) {
+      if (fractionX < 0.5) collideY(-3, 0, 1);
+      else collideY(-3, 0, -1);
+    }
+  }
+
+  if (vy < 0 && fractionY < 0.5) {
+    // 下に落ちている
+    collideY(0, 0, 0);
+    if (fractionX > 0.2 && fractionX < 0.8) {
+      if (fractionX < 0.5) collideY(0, 0, 1);
+      else collideY(0, 0, -1);
+    }
+  }
+
+  // 左右方向の加速
+  if (!collide) vx = right ? 5 : left ? -5 : 0;
+
+  // 接地チェック
+  const floorYIndex = 15 - y / 32;
+  const floorXIndex = x / 32;
+
   if (
-    i >= 0 &&
-    j >= 0 &&
-    i < stage.length &&
-    (stage[i][j] === 1 || stage[i][j + 1] === 1)
+    floorYIndex === Math.floor(floorYIndex) &&
+    floorYIndex >= 0 &&
+    floorYIndex < stage.length &&
+    (stage[floorYIndex][Math.floor(floorXIndex)] === 1 ||
+      (floorXIndex !== Math.floor(floorXIndex) &&
+        stage[floorYIndex][Math.ceil(floorXIndex)] === 1))
   ) {
-    // 地面についてる
-    y = (15 - i) * 32;
-    vy = 0;
     secchi = "tsuiteru";
   } else {
-    // 空中の処理
-    vy = vy - 0.2;
     secchi = "uiteru";
+    vy = vy - 0.2;
   }
 }
 function stepCharacter() {
@@ -87,20 +179,20 @@ function keydown_ivent(e) {
     vy = 5;
   }
   if (e.code === "KeyD") {
-    vx = 5;
+    right = true;
   }
   if (e.code === "KeyA") {
-    xx = -5;
+    left = true;
   }
 }
 document.addEventListener("keyup", keyup_ivent);
 
 function keyup_ivent(e) {
   if (e.code === "KeyD") {
-    vx = 0;
+    right = false;
   }
   if (e.code === "KeyA") {
-    xx = 0;
+    left = false;
   }
 }
 setInterval(yoyoyo, 1);
