@@ -55,9 +55,12 @@ function yuyuyuyuyu() {
     }
   }
 
-  // 加速度
+  // 速度分進める
   y = y + vy;
   x = x + vx;
+
+  // キー入力による加速度設定
+  vx = right ? 5 : left ? -5 : 0;
 
   /*
    * 衝突判定
@@ -103,35 +106,37 @@ function yuyuyuyuyu() {
   }
 
   // 計算の振り分け
-  const xIndex = x / 32;
-  const yIndex = 15 - y / 32;
-  const fractionX = xIndex - Math.floor(xIndex);
-  const fractionY = yIndex - Math.floor(yIndex);
-
-  let collide = false;
+  let xIndex = x / 32;
+  let yIndex = 15 - y / 32;
+  let fractionX = xIndex - Math.floor(xIndex);
+  let fractionY = yIndex - Math.floor(yIndex);
 
   if (vx > 0 && fractionX < 0.5) {
     // 右に進んでいる
-    collide = collideX(1) || collide;
-    if (fractionY > 0.2 && fractionY < 0.8) {
-      if (fractionY > 0.5) collide = collideX(1, -1) || collide;
-      else collide = collideX(1, 1) || collide;
+    collideX(1);
+    if (fractionY > 0.1 && fractionY < 0.9) {
+      if (fractionY > 0.5) collideX(1, -1);
+      else collideX(1, 1);
     }
   }
 
   if (vx < 0 && fractionX > 0.5) {
     // 左に進んでいる
-    collide = collideX(-1) || collide;
-    if (fractionY > 0.2 && fractionY < 0.8) {
-      if (fractionY > 0.5) collide = collideX(-1, -1) || collide;
-      else collide = collideX(-1, 1) || collide;
+    collideX(-1);
+    if (fractionY > 0.1 && fractionY < 0.9) {
+      if (fractionY > 0.5) collideX(-1, -1);
+      else collideX(-1, 1);
     }
   }
+
+  // x軸の再計算
+  xIndex = x / 32;
+  fractionX = xIndex - Math.floor(xIndex);
 
   if (vy > 0 && fractionY > 0.5) {
     // 上に飛んでいる
     collideY(-3, 0, 0);
-    if (fractionX > 0.2 && fractionX < 0.8) {
+    if (fractionX > 0.1 && fractionX < 0.9) {
       if (fractionX < 0.5) collideY(-3, 0, 1);
       else collideY(-3, 0, -1);
     }
@@ -140,14 +145,11 @@ function yuyuyuyuyu() {
   if (vy < 0 && fractionY < 0.5) {
     // 下に落ちている
     collideY(0, 0, 0);
-    if (fractionX > 0.2 && fractionX < 0.8) {
+    if (fractionX > 0.1 && fractionX < 0.9) {
       if (fractionX < 0.5) collideY(0, 0, 1);
       else collideY(0, 0, -1);
     }
   }
-
-  // 左右方向の加速
-  if (!collide) vx = right ? 5 : left ? -5 : 0;
 
   // 接地チェック
   const floorYIndex = 15 - y / 32;
