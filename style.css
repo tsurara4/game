@@ -6,3 +6,14 @@ body
 {padding: calc((100vh - 480px)/2) 0 0 calc((100vw - 512px)/2);
 margin: 0px 0 0 0;
 } 
+
+#gameover {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    padding: calc((100vh - 183px)/2) 0 0 calc((100vw - 864px)/2);}
+    #gameover {
+        display: none;
+        }

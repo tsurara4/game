@@ -5,8 +5,17 @@ const chara1 = document.getElementById("chara1");
 const chara2 = document.getElementById("chara2");
 const chara3 = document.getElementById("chara3");
 const chara4 = document.getElementById("chara4");
+const chara5 = document.getElementById("chara5");
+const chara6 = document.getElementById("chara6");
+const chara1R = document.getElementById("chara1R");
+const chara2R = document.getElementById("chara2R");
+const chara3R = document.getElementById("chara3R");
+const chara4R = document.getElementById("chara4R");
+const chara5R = document.getElementById("chara5R");
+const chara6R = document.getElementById("chara6R");
 const block1 = document.getElementById("block");
 const haikei = document.getElementById("haikei1");
+const gameover = document.getElementById("gameover");
 
 //console.log(chara1);
 let x = 0;
@@ -18,6 +27,10 @@ let n = 1;
 let Character = 1;
 let chara;
 let secchi = "uiteru";
+let isGameover = false;
+let direction = "right";
+
+
 
 let right = false;
 let left = false;
@@ -26,9 +39,11 @@ const ctx = jiro.getContext("2d");
 
 ctx.fillStyle = "#ff77cc";
 
+
+
 setInterval(yuyuyuyuyu, 1000 / 60);
 
-setInterval(stepCharacter, 200);
+setInterval(stepCharacter, 20);
 
 function yuyuyuyuyu() {
   ctx.clearRect(0, 0, 512, 480);
@@ -37,11 +52,39 @@ function yuyuyuyuyu() {
   ctx.drawImage(haikei, hajime, 0);
   ctx.drawImage(haikei, hajime + 1024, 0);
 
-  //console.log(Character)
-  if (Character === 1) chara = chara1;
-  else if (Character === 2) chara = chara2;
-  else if (Character === 3) chara = chara3;
-  else if (Character === 4) chara = chara4;
+  if (y < -1500 && !isGameover) {
+    console.log("si");
+    gameover.style.display = "block";
+    isGameover = true;
+    setTimeout(function respawn() {
+      isGameover = false;
+      gameover.style.display = "none";
+      y = 50;
+      x = 0;
+      vy = 1;
+    }, 3000)
+  }
+
+
+  if (direction === "right") {
+    if (Character === 1) chara = chara1R;
+    else if (Character === 2) chara = chara2R;
+    else if (Character === 3) chara = chara3R;
+    else if (Character === 4) chara = chara4R;
+    else if (Character === 5) chara = chara5R;
+    else if (Character === 6) chara = chara6R;
+  }
+
+  else if (direction === "left") {
+    if (Character === 1) chara = chara1;
+    else if (Character === 2) chara = chara2;
+    else if (Character === 3) chara = chara3;
+    else if (Character === 4) chara = chara4;
+    else if (Character === 5) chara = chara5;
+    else if (Character === 6) chara = chara6;
+  }
+  
+
 
   ctx.drawImage(chara, 200, 480 - 64 - y);
 
@@ -178,13 +221,15 @@ document.addEventListener("keydown", keydown_ivent);
 
 function keydown_ivent(e) {
   if (e.code === "Space" && secchi === "tsuiteru") {
-    vy = 5;
+    vy = 7;
   }
   if (e.code === "KeyD") {
     right = true;
+    direction = "right";
   }
   if (e.code === "KeyA") {
     left = true;
+    direction = "left";
   }
 }
 document.addEventListener("keyup", keyup_ivent);
@@ -200,3 +245,5 @@ function keyup_ivent(e) {
 setInterval(yoyoyo, 1);
 
 function yoyoyo() {}
+
+
