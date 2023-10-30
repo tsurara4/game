@@ -24,7 +24,7 @@ let vx = 0;
 let vy = 0;
 let s = 1024;
 let n = 1;
-let Character = 1;
+let step = 1;
 let chara;
 let secchi = "uiteru";
 let isGameover = false;
@@ -60,7 +60,7 @@ function yuyuyuyuyu() {
   }
 
   // 一周60fとする
-  const c = Character % 60;
+  const c = step % 60;
   // ↑を6等分し易いようにする
   const s = c / 10;
   // 小数点以下を切り捨てる
@@ -208,7 +208,7 @@ function yuyuyuyuyu() {
     vy = vy - 0.2;
   }
 
-  Character++;
+  step++;
 }
 
 document.addEventListener("keydown", keydown_ivent);
