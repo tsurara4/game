@@ -30,16 +30,12 @@ let secchi = "uiteru";
 let isGameover = false;
 let direction = "right";
 
-
-
 let right = false;
 let left = false;
 
 const ctx = jiro.getContext("2d");
 
 ctx.fillStyle = "#ff77cc";
-
-
 
 setInterval(yuyuyuyuyu, 1000 / 60);
 
@@ -62,9 +58,8 @@ function yuyuyuyuyu() {
       y = 50;
       x = 0;
       vy = 1;
-    }, 3000)
+    }, 3000);
   }
-
 
   if (direction === "right") {
     if (Character === 1) chara = chara1R;
@@ -73,9 +68,7 @@ function yuyuyuyuyu() {
     else if (Character === 4) chara = chara4R;
     else if (Character === 5) chara = chara5R;
     else if (Character === 6) chara = chara6R;
-  }
-
-  else if (direction === "left") {
+  } else if (direction === "left") {
     if (Character === 1) chara = chara1;
     else if (Character === 2) chara = chara2;
     else if (Character === 3) chara = chara3;
@@ -83,8 +76,6 @@ function yuyuyuyuyu() {
     else if (Character === 5) chara = chara5;
     else if (Character === 6) chara = chara6;
   }
-  
-
 
   ctx.drawImage(chara, 200, 480 - 64 - y);
 
@@ -245,5 +236,3 @@ function keyup_ivent(e) {
 setInterval(yoyoyo, 1);
 
 function yoyoyo() {}
-
-
