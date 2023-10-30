@@ -39,8 +39,6 @@ ctx.fillStyle = "#ff77cc";
 
 setInterval(yuyuyuyuyu, 1000 / 60);
 
-setInterval(stepCharacter, 20);
-
 function yuyuyuyuyu() {
   ctx.clearRect(0, 0, 512, 480);
 
@@ -61,20 +59,27 @@ function yuyuyuyuyu() {
     }, 3000);
   }
 
+  // 一周60fとする
+  const c = Character % 60;
+  // ↑を6等分し易いようにする
+  const s = c / 10;
+  // 小数点以下を切り捨てる
+  const t = Math.floor(s);
+
   if (direction === "right") {
-    if (Character === 1) chara = chara1R;
-    else if (Character === 2) chara = chara2R;
-    else if (Character === 3) chara = chara3R;
-    else if (Character === 4) chara = chara4R;
-    else if (Character === 5) chara = chara5R;
-    else if (Character === 6) chara = chara6R;
+    if (t === 0) chara = chara1R;
+    else if (t === 1) chara = chara2R;
+    else if (t === 2) chara = chara3R;
+    else if (t === 3) chara = chara4R;
+    else if (t === 4) chara = chara5R;
+    else if (t === 5) chara = chara6R;
   } else if (direction === "left") {
-    if (Character === 1) chara = chara1;
-    else if (Character === 2) chara = chara2;
-    else if (Character === 3) chara = chara3;
-    else if (Character === 4) chara = chara4;
-    else if (Character === 5) chara = chara5;
-    else if (Character === 6) chara = chara6;
+    if (t === 0) chara = chara1;
+    else if (t === 1) chara = chara2;
+    else if (t === 2) chara = chara3;
+    else if (t === 3) chara = chara4;
+    else if (t === 4) chara = chara5;
+    else if (t === 5) chara = chara6;
   }
 
   ctx.drawImage(chara, 200, 480 - 64 - y);
@@ -202,10 +207,8 @@ function yuyuyuyuyu() {
     secchi = "uiteru";
     vy = vy - 0.2;
   }
-}
-function stepCharacter() {
-  Character = Character + 1;
-  if (Character === 5) Character = 1;
+
+  Character++;
 }
 
 document.addEventListener("keydown", keydown_ivent);
