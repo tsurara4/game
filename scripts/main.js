@@ -16,6 +16,9 @@ const chara6R = document.getElementById("chara6R");
 const block1 = document.getElementById("block");
 const haikei = document.getElementById("haikei1");
 const gameover = document.getElementById("gameover");
+const start = document.getElementById("yuhi");
+const start2 = document.getElementById("torii");
+
 
 //console.log(chara1);
 let x = 0;
@@ -216,15 +219,19 @@ document.addEventListener("keydown", keydown_ivent);
 function keydown_ivent(e) {
   if (e.code === "Space" && secchi === "tsuiteru") {
     vy = 7;
+    start.style.display = "none";
+    start2.style.display = "none";
   }
-  if (e.code === "KeyD") {
-    right = true;
-    direction = "right";
-  }
-  if (e.code === "KeyA") {
-    left = true;
-    direction = "left";
-  }
+
+
+if (e.code === "KeyD") {
+  right = true;
+  direction = "right";
+}
+if (e.code === "KeyA") {
+  left = true;
+  direction = "left";
+}
 }
 document.addEventListener("keyup", keyup_ivent);
 
@@ -236,6 +243,8 @@ function keyup_ivent(e) {
     left = false;
   }
 }
+
+
 setInterval(yoyoyo, 1);
 
 function yoyoyo() {}

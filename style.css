@@ -7,6 +7,8 @@ body
 margin: 0px 0 0 0;
 } 
 
+
+
 #gameover {
     position: fixed;
     top: 0;
@@ -17,6 +19,29 @@ margin: 0px 0 0 0;
     #gameover {
         display: none;
         }
+#yuhi {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    background: #ffffff;
+    background-image: url(start-bg.jpg);
+    background-size: cover;
+    background-position: center;
+}
+
+#torii {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    background-image: url(start-fg3.png);
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+}
 
         #sousa {
             color: white;
@@ -30,3 +55,4 @@ margin: 0px 0 0 0;
     bottom: 10px;
     left: 10px;
 }
+
