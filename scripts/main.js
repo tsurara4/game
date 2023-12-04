@@ -33,6 +33,8 @@ let secchi = "uiteru";
 let isGameover = false;
 let direction = "right";
 
+let started = false;
+
 let right = false;
 let left = false;
 
@@ -217,21 +219,25 @@ function yuyuyuyuyu() {
 document.addEventListener("keydown", keydown_ivent);
 
 function keydown_ivent(e) {
-  if (e.code === "Space" && secchi === "tsuiteru") {
+   if (e.code === "Space" && secchi === "tsuiteru" && started === "true" ) {
     vy = 7;
+  }
+  
+  if (e.code === "Space") {
+    started = "true";
     start.style.display = "none";
     start2.style.display = "none";
   }
 
 
-if (e.code === "KeyD") {
-  right = true;
-  direction = "right";
-}
-if (e.code === "KeyA") {
-  left = true;
-  direction = "left";
-}
+  if (e.code === "KeyD" && started === "true") {
+    right = true;
+    direction = "right";
+  }
+  if (e.code === "KeyA" && started === "true") {
+    left = true;
+    direction = "left";
+  }
 }
 document.addEventListener("keyup", keyup_ivent);
 
