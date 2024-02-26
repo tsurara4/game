@@ -16,9 +16,9 @@ const chara6R = document.getElementById("chara6R");
 const block1 = document.getElementById("block");
 const haikei = document.getElementById("haikei1");
 const gameover = document.getElementById("gameover");
+const stageClear = document.getElementById("stage-clear");
 const start = document.getElementById("yuhi");
 const start2 = document.getElementById("torii");
-
 
 //console.log(chara1);
 let x = 0;
@@ -31,6 +31,7 @@ let step = 1;
 let chara;
 let secchi = "uiteru";
 let isGameover = false;
+let isStageCleared = false;
 let direction = "right";
 
 let started = false;
@@ -45,6 +46,8 @@ ctx.fillStyle = "#ff77cc";
 setInterval(yuyuyuyuyu, 1000 / 60);
 
 function yuyuyuyuyu() {
+  if (isStageCleared) return;
+
   ctx.clearRect(0, 0, 512, 480);
 
   const hajime = -((x / 12 + 512) % 1024) - 512;
@@ -62,6 +65,19 @@ function yuyuyuyuyu() {
       x = 0;
       vy = 1;
     }, 3000);
+  }
+
+  if (x > 2000 && !isStageCleared) {
+    console.log("cleared");
+    stageClear.style.display = "block";
+    isStageCleared = true;
+    setTimeout(() => {
+      isStageCleared = false;
+      stageClear.style.display = "none";
+      y = 50;
+      x = 0;
+      vy = 1;
+    }, 5000);
   }
 
   // 一周60fとする
@@ -219,16 +235,15 @@ function yuyuyuyuyu() {
 document.addEventListener("keydown", keydown_ivent);
 
 function keydown_ivent(e) {
-   if (e.code === "Space" && secchi === "tsuiteru" && started === "true" ) {
+  if (e.code === "Space" && secchi === "tsuiteru" && started === "true") {
     vy = 7;
   }
-  
+
   if (e.code === "Space") {
     started = "true";
     start.style.display = "none";
     start2.style.display = "none";
   }
-
 
   if (e.code === "KeyD" && started === "true") {
     right = true;
@@ -249,7 +264,6 @@ function keyup_ivent(e) {
     left = false;
   }
 }
-
 
 setInterval(yoyoyo, 1);
 
