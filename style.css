@@ -70,3 +70,9 @@ margin: 0px 0 0 0;
     left: 10px;
 }
 
+#play {
+  position: absolute;
+  left: 20px;
+  top: 20px;
+  cursor: pointer;
+}
