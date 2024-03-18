@@ -19,6 +19,8 @@ const gameover = document.getElementById("gameover");
 const stageClear = document.getElementById("stage-clear");
 const start = document.getElementById("yuhi");
 const start2 = document.getElementById("torii");
+const bgm = document.getElementById("bgm");
+const play = document.getElementById("play");
 
 //console.log(chara1);
 let x = 0;
@@ -268,3 +270,8 @@ function keyup_ivent(e) {
 setInterval(yoyoyo, 1);
 
 function yoyoyo() {}
+
+play.addEventListener("click", () => {
+  bgm.play();
+  play.style.display = "none";
+});
