@@ -49,7 +49,7 @@ ctx.fillStyle = "#ff77cc";
 setInterval(yuyuyuyuyu, 1000 / 60);
 
 function yuyuyuyuyu() {
-  if (isStageCleared) return;
+  if (isStageCleared || isGameover) return;
 
   ctx.clearRect(0, 0, 512, 480);
 
