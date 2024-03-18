@@ -21,6 +21,7 @@ const start = document.getElementById("yuhi");
 const start2 = document.getElementById("torii");
 const bgm = document.getElementById("bgm");
 const play = document.getElementById("play");
+const hata = document.getElementById("hata");
 
 //console.log(chara1);
 let x = 0;
@@ -69,17 +70,11 @@ function yuyuyuyuyu() {
     }, 3000);
   }
 
-  if (x > 2000 && !isStageCleared) {
+  if (x > 1550 && !isStageCleared) {
     console.log("cleared");
     stageClear.style.display = "block";
     isStageCleared = true;
-    setTimeout(() => {
-      isStageCleared = false;
-      stageClear.style.display = "none";
-      y = 50;
-      x = 0;
-      vy = 1;
-    }, 5000);
+  
   }
 
   // 一周60fとする
@@ -116,6 +111,8 @@ function yuyuyuyuyu() {
       }
     }
   }
+
+  ctx.drawImage(hata, 1300-x, 100);
 
   // 速度分進める
   y = y + vy;
@@ -245,6 +242,8 @@ function keydown_ivent(e) {
     started = "true";
     start.style.display = "none";
     start2.style.display = "none";
+    bgm.play();
+  play.style.display = "none";
   }
 
   if (e.code === "KeyD" && started === "true") {
@@ -271,7 +270,3 @@ setInterval(yoyoyo, 1);
 
 function yoyoyo() {}
 
-play.addEventListener("click", () => {
-  bgm.play();
-  play.style.display = "none";
-});
